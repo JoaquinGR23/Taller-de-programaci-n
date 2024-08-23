@@ -82,7 +82,7 @@ var
   i,j:integer;
   max:maximos;
 begin
-  for i:=2 to df-1 do begin
+  for i:=2 to df do begin
 	j:=i-1; max:=v[i];
 	while((j>0)and(max.puntM<v[j].puntM)) do begin
 	  v[j+1]:=v[j]; j:=j-1; 
