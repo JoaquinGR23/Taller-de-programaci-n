@@ -91,7 +91,7 @@ var
 begin
   for i:=2 to dl2 do begin 
     j:=i-1; actual:=v2[i];
-    while((j>0)and(v2[j].precio>v2[i].precio)) do begin 
+    while((j>0)and(v2[j].precio>actual.precio)) do begin 
 		v2[j+1]:=v2[j]; j:=j-1;
     end; 
     v2[j+1]:=actual;
