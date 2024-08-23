@@ -46,16 +46,14 @@ begin
 end;
 procedure ordenar(var v:vector;dl:integer);
 var
-  j,i:integer;
-  aux1:sub2;
-  aux2:ventas;
+  j,i:integer; actual:ventas;
 begin
-  for i:=2 to dl do begin 
-    aux1:=v[i].cod; j:= i-1; aux2:= v[i];
-    while((j>0)and(v[j].cod>aux1)) do begin
+  for i:=2 to dl do begin
+    j:= i-1; actual:= v[i];
+    while((j>0)and(v[j].cod>actual.cod)) do begin
       v[j+1]:=v[j]; j:=j-1; 
 	end;
-	v[j+1]:= aux2;
+	v[j+1]:= actual;
   end;
 end;
 
@@ -63,7 +61,7 @@ procedure nuevaEstruc(v:vector;dl:integer;var v2:vector;var dl2,total:integer);
 var
 	i: integer;
 begin
-    dl2:=0;
+    dl2:=0; total:=0;
 	for i:= 1 to dl do begin
 		if (v[i].cod MOD 2 = 0)then begin
 			dl2:= dl2 +1;
