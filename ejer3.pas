@@ -1,3 +1,32 @@
+program netflix;
+const
+  df=8;
+type
+  sub= 1..8;
+  peliGuardar = record
+    codP:integer;
+    puntajeC: real;
+  end;
+  peliculas = record 
+    dato: peliGuardar;
+    codG: sub;
+  end;
+  lista = ^nodo;
+  nodo = record
+	ele:peliGuardar;
+	sig:lista;
+  end;
+  
+   punteros = record
+	l,ult:lista;
+  end;
+  vectorPunt = array[1..df] of punteros;
+  maximos = record
+	codM:integer;
+	puntM: real;
+  end;
+  vector2=array[1..df]of maximos;
+  
 procedure agregarAtras(var l,ult:lista;p:peliGuardar);
 var
   nuevo:lista;
