@@ -1,76 +1,55 @@
-program netflix;
-const
-  df=8;
-type
-  sub= 1..8;
-  peliculas =record 
-    codP:integer;
-    codG: sub;
-    puntajeC: real;
-  end;
-  lista = ^nodo;
-  nodo = record
-	ele:peliculas;
-	sig:lista;
-  end;
-  maximos = record
-	codM:integer;
-	puntM: real;
-  end;
-  vector= array[1..df] of lista;
-  vector2=array[1..df]of maximos;
-procedure agregarAtras(var l:lista;p:peliculas);
+procedure agregarAtras(var l,ult:lista;p:peliGuardar);
 var
-  nuevo,aux:lista;
+  nuevo:lista;
 begin 
-  new(nuevo); nuevo^.ele:= p; nuevo^.sig:=nil;
-  if(l=nil) then l:=nuevo
-  else begin
-    aux:=l;
-    while(aux^.sig<>l) do l:=l^.sig;
-    aux^.sig:=nuevo; 
+  new(nuevo); nuevo^.ele:=p; nuevo^.sig:=nil;
+  if(l=nil)then begin 
+    l:=nuevo; ult:=nuevo;
+  end
+  else begin 
+    ult^.sig:=nuevo; ult:=nuevo;
   end;
 end;
 procedure cargarReg(var p:peliculas);
 begin
-  readln(p.codP); 
-  if(p.codP <> -1) then begin 
-    writeln('genero '); readln(p.codG); writeln('puntaje promedio '); readln(p.puntajeC);
+  readln(p.dato.codP); 
+  if(p.dato.codP <> -1) then begin 
+    writeln('genero '); readln(p.codG); writeln('puntaje promedio '); readln(p.dato.puntajeC);
   end;
 end;
-procedure inicializacion(var v:vector);
+procedure inicializacion(var v:vectorPunt);
 var 
   i:integer;
 begin
-  for i:=1 to df do v[i]:=nil;
+  for i:=1 to df do v[i].l:=nil;
 end;
-procedure cargar(var v:vector);
+procedure cargar(var v:vectorPunt);
 var
   p:peliculas;
 begin
   inicializacion(v);
   cargarReg(p);
-  while(p.codP <> -1)do begin
-    agregarAtras(v[p.codG], p);
+  while(p.dato.codP <> -1)do begin
+    agregarAtras(v[p.codG].l,v[p.codG].ult, p.dato);
     cargarReg(p);
   end;
 end;
 procedure inicializacionVector(var v2:vector2);
 var i:integer;
 begin
-  for i:=1 to df do v2[i].codM:=-1;
+  for i:=1 to df do v2[i].puntM:=-1;
 end;
-procedure nuevoVector(v:vector; var v2:vector2);
+procedure nuevoVector(v:vectorPunt; var v2:vector2);
 var
   i:integer;
   l:lista;
 begin
   inicializacionVector(v2);
   for i:=1 to df do begin
-    l:=v[i];
+    l:=v[i].l;
     while(l<>nil) do begin 
 	  if(v2[i].puntM<l^.ele.puntajeC) then begin 
-	    v2[i].puntM:= l^.ele.puntajeC; 
+		v2[i].puntM:= l^.ele.puntajeC; 
 	    v2[i].codM:=l^.ele.codP;
 	  end;
 	  l:=l^.sig;
@@ -95,7 +74,7 @@ begin
   writeln('minimo ',v[1].codM); writeln('maximo ', v[df].codM);
 end;
 var
-  v:vector;
+  v:vectorPunt;
   v2:vector2;
 begin
   cargar(v);
