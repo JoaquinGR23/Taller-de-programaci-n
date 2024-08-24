@@ -4,19 +4,22 @@ const
   df2 =30;
 type
   sub=1..8;
+  prodGuardar=record
+	precio:real;
+	codP:integer;
+  end;
   productos = record
-    codP:integer;
+    prod:prodGuardar;
     codRubro: sub;
-    precio:real;
   end;
   lista = ^nodo;
   nodo = record
-	ele:productos;
+	ele:prodGuardar;
 	sig:lista;
   end;
   vector = array[1..df1] of lista;
-  vector2 = array[1..df2] of productos;
-procedure insertar(var l:lista;p:productos);
+  vector2 = array[1..df2] of prodGuardar;
+procedure insertar(var l:lista;p:prodGuardar);
 var
   ant,actual,nuevo:lista;
 begin
@@ -45,19 +48,18 @@ begin
 end;
 procedure cargarReg(var p:productos);
 begin
-  readln(p.precio);
-  if(p.precio <> 0) then begin
-    readln(p.codP); readln(p.codRubro);
+  readln(p.prod.precio);
+  if(p.prod.precio <> 0) then begin
+    readln(p.prod.codP); readln(p.codRubro);
   end;
 end;
 procedure cargar(var v:vector);
-var
-  p:productos;
+var p:productos;
 begin
   cargarReg(p);
   inicializacion(v);
-  while(p.precio<>0) do begin
-	insertar(v[p.codRubro],p);
+  while(p.prod.precio<>0) do begin
+	insertar(v[p.codRubro],p.prod);
 	cargarReg(p);
   end;
 end;
@@ -87,11 +89,11 @@ end;
 procedure ordenarV(var v2:vector2;dl2:integer);
 var
   i,j:integer;
-  actual: productos;
+  actual: prodGuardar;
 begin
   for i:=2 to dl2 do begin 
     j:=i-1; actual:=v2[i];
-    while((j>0)and(v2[j].precio>actual.precio)) do begin 
+    while((j>0)and(v2[j].precio>v2[i].precio)) do begin 
 		v2[j+1]:=v2[j]; j:=j-1;
     end; 
     v2[j+1]:=actual;
