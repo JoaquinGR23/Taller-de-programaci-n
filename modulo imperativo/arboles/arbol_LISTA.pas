@@ -1,25 +1,24 @@
 program ejer;
-
 type
   sub1=0..1000;
-  cliente=record
+  cliente=record   //INFORMACION PRINCIPAL DEL ARBOL
 	cod:sub1;
 	dir:string;
   end;
-  mensaje=record
+  mensaje=record  //INFORMACION DE LA LISTA
 	dirE,fecha,asunto,texto:string;
 	leido:boolean;
   end;
-  infoIngreso=record
-	cli:cliente;
-	correo:mensaje;
+  infoIngreso=record	//INFORMACION PRINCIPAL DE INGRESAR
+	cli:cliente;  //PARA EL NODO DEL ARBOL
+	correo:mensaje;	//PARA EL NODO DE LA LISTA
   end;
   lista=^nodo;
   nodo=record
 	ele:mensaje;
 	sig:lista;
   end;
-  infoNodo=record
+  infoNodo=record   //INFORMACION DEL NODO DEL ARBOL
 	cli:cliente;
 	m:lista;
   end;
@@ -28,7 +27,7 @@ type
 	HI,HD:arbol;
 	ele:infoNodo;
   end;
-procedure cargarReg(var d:infoIngreso);
+procedure cargarReg(var d:infoIngreso); //CARGA DE TODA LA INFORMACION
 var i:integer;
 begin
   readln(d.cli.cod);
@@ -44,7 +43,7 @@ begin
 	
   end; 
 end;
-procedure agregarL(var l:lista; d:mensaje);
+procedure agregarL(var l:lista; d:mensaje); 
 var nuevo:lista;
 begin
   new(nuevo); nuevo^.ele:=d; nuevo^.sig:=l; l:=nuevo;
