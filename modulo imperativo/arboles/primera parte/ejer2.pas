@@ -215,7 +215,7 @@ begin
   writeln('						ARBOL 3 					');
   imprimir3(c);
   readln(f);
-  writeln('cantidad total de productos vendidos en la fecha es: ',busquedaFecha(a,f)); //deberia generarse un modulo para cargar dia,mes,anio de la fecha
+  writeln('cantidad total de productos vendidos en la fecha es: ',busquedaFecha(a,f)); //deberia generarse un modulo para cargar dia,mes,anio de la fecha pero para este ejercicio no hace falta
   max:=-9999;
   buscarMax(b,max,cod);  
   writeln('el cod que tiene mas cantidades vendidas es ',cod);
