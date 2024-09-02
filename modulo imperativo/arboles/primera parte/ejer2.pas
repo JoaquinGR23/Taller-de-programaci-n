@@ -162,8 +162,7 @@ begin
 end;
 procedure informar2(cod:integer;l:lista);
 begin
-  writeln('cod ', cod);
-  imprimirL(l); 
+  writeln('cod ', cod); imprimirL(l); 
 end;
 procedure imprimir3(a:arbol3);
 begin
@@ -174,22 +173,29 @@ begin
    end;
 end;
 function contarVentas(l:lista):integer;
+var cont:integer;
 begin
-  if(l<>nil)then contarVentas:= contarVentas(l^.sig)+1
-  else contarVentas:=0; 
+  cont:=0;
+  while(l<>nil)do begin 
+    cont:=cont+1; l:=l^.sig;
+  end; 
+  contarVentas:=cont;
 end;
-function codMax(a:arbol3;max,cod:integer):integer; //Preguntar
+procedure actualizarMax(var max,cod:integer;cant,nuevoCod:integer);
+begin
+  if(max<cant)then begin 
+    max:=cant; cod:= nuevoCod;
+  end; 
+end;
+procedure codMax(a:arbol3;var max,cod:integer); 
 var cant:integer;
 begin
   if(a<>nil)then begin 
     cant:=contarVentas(a^.ele.v);
-    if(cant>max)then begin 
-      max:=cant; cod:=a^.ele.cod;
+    actualizarMax(max,cod,cant,a^.ele.cod);
     end;
-	codMax:= codMax(a^.HI,max,cod);
-	codMax:= codMax(a^.HD,max,cod);
-  end
-  else codMax:=cod
+	codMax(a^.HI,max,cod);
+	codMax(a^.HD,max,cod);
 end;
 
 var
@@ -214,7 +220,9 @@ begin
   buscarMax(b,max,cod);  
   writeln('el cod que tiene mas cantidades vendidas es ',cod);
   max:=-9999;
-  writeln('el cod que tiene mas cantidades vendidas es ',maxFuncion(b,max)); 
-  writeln('cod de producto con mayor cantidad de ventas vendidas', codMax(c,max,cod));
-  
+  writeln('el cod que tiene mas cantidades vendidas es ',maxFuncion(b,max)); //esperando respuesta
+  max:=-1; 
+  codMax(c,max,cod);
+  writeln('cod de producto con mayor cantidad de ventas vendidas', cod);
 end.
+
