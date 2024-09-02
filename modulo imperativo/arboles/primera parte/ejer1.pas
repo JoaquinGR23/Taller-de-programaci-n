@@ -69,7 +69,7 @@ begin
 	mayorEdad(a^.HD,max,num);
   end;
 end;
-function AumentarEdad(a:arbol):integer; //Implementar la funcion 
+function AumentarEdad(a:arbol):integer;
 var resto: integer;
 begin
   if (a<>nil)then begin 
@@ -161,4 +161,5 @@ begin
 	writeln('cantidad de socios ',cantSocios(a));
 	writeln('promedio de edades de los socios ',promedioEdades(a)); 
   end;
+end.
 end.
