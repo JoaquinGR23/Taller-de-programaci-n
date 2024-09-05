@@ -119,21 +119,6 @@ begin
   end;
 end;
 
-
-function maxFuncion(a:arbol2;maximo:integer):integer; //esperando respuesta
-var cod:integer;
-begin
-  if(a<>nil)then begin
-    if(a^.ele.cant>maximo) then begin 
-      maximo:=a^.ele.cant; cod:=a^.ele.cod; //max:=-1;
-    end;
-    maxFuncion:=maxFuncion(a^.HI,maximo);
-    maxFuncion:=maxFuncion(a^.HD,maximo);
-  end
-  else maxFuncion:=cod; 
-end;
-
-
 procedure informar(d:infoCarga);
 begin
   writeln('cod ',d.cod); writeln('fecha ',d.v.fecha); writeln('cant ',d.v.cant); 
@@ -219,8 +204,6 @@ begin
   max:=-9999;
   buscarMax(b,max,cod);  
   writeln('el cod que tiene mas cantidades vendidas es ',cod);
-  max:=-9999;
-  writeln('el cod que tiene mas cantidades vendidas es ',maxFuncion(b,max)); //esperando respuesta
   max:=-1; 
   codMax(c,max,cod);
   writeln('cod de producto con mayor cantidad de ventas vendidas', cod);
