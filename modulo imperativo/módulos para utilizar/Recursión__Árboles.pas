@@ -89,11 +89,11 @@ begin
   else cantSocios:=0;
 end; 
 
-BEGIN 
+begin
   cant:= cantSocios(a);
-END.
+end.
 
-<<----------CONTADOR DE NODOS DE TODO EL ARBOL------------>>
+
 {  -----------------------------------------VECTOR ELIMINAR ELEMENTOS EN RANGO------------------------------------------- }
 program ejemplo;
 
