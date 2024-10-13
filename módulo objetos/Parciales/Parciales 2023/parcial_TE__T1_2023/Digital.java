@@ -5,8 +5,8 @@ package parcial_te_2023;
 public class Digital extends Banco {
     private String dirWeb;
 
-    public Digital(String dirWeb, int N) {
-        super(N);
+    public Digital(String dirWeb, int N, String nom, int cantEmpleados) {
+        super(N,nom,cantEmpleados);
         this.dirWeb = dirWeb;
     }
 
