@@ -6,8 +6,8 @@ import PaqueteLectura.GeneradorAleatorio;
 public class Parcial_TE_2023 {
 
     public static void main(String[] args) {
-       Tradicional t = new Tradicional(30);
-       Digital d = new Digital("dir web", 10);
+       Tradicional t = new Tradicional(30,"banco X", 30);
+       Digital d = new Digital("dir web", 10,"banco Y", 20);
        Cuenta c;
            c = new Cuenta(GeneradorAleatorio.generarString(12)+1, "dolar", 123, GeneradorAleatorio.generarInt(2344)+1);
            t.agregarCuenta(c);
