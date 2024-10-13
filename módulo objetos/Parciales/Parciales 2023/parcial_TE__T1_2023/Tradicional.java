@@ -6,8 +6,8 @@ public class Tradicional extends Banco{
     private String dir,localidad;
     private int cantCuentas;
 
-    public Tradicional(int N) {
-        super(N);
+    public Tradicional(int N,String nom, int cantEmpleados) {
+        super(N,nom,cantEmpleados);
         this.cantCuentas = 0;
     }
 
