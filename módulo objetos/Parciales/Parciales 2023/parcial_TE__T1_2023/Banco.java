@@ -21,7 +21,7 @@ public abstract class Banco {
         }
         else return false;
     }
-    public Cuenta obtenerCuenta(int cbu){
+    public Cuenta obtenerCuenta(int cbu){ //EL CBU esta en el banco entonces por eso no hay control de si esta o no el CBU, seguro esta.
         int cont=0;
         while(!c[cont].verificarCbu(cbu)) cont++;
         return this.c[cont];
