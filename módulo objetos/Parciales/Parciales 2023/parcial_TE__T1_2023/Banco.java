@@ -7,7 +7,9 @@ public abstract class Banco {
     private int cant,df,dl;
     private Cuenta []c;
 
-    public Banco(int N) {
+    public Banco(int N, String nom, int cantEmpleados) {
+        this.nom= nom;
+        this.cant=cantEmpleados;
         this.df = N;
         this.dl=0;
         this.c = new Cuenta[this.df];
