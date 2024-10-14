@@ -34,7 +34,7 @@ public void agregar(Objeto e, int Fila){ //RECORDAR QUE LOGICAMENTE SE LE RESTA 
     }  
   }
 
-   this.matriz= new tipo_dato[this.S¡filas][this.columnas];
+   this.matriz= new tipo_dato[this.filas][this.columnas];
         for(int i=0;i<this.filas;i++){
             for(int j=0;j<this.columnas;j++) this.matriz[i][j]=null;
         }
@@ -51,7 +51,7 @@ public void agregar(Objeto e, int Fila){ //RECORDAR QUE LOGICAMENTE SE LE RESTA 
   }
 
 
-   this.matriz= new tipo_dato[this.S¡filas][this.columnas];
+   this.matriz= new tipo_dato[this.filas][this.columnas];
         for(int i=0;i<this.filas;i++){
             for(int j=0;j<this.columnas;j++) this.matriz[i][j]= new tipo_dato(elementos del constructor);
         }
