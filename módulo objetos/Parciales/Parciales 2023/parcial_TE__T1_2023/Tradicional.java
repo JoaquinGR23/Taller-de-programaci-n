@@ -28,12 +28,14 @@ public class Tradicional extends Banco{
     
 
     @Override
-   public boolean agregarCuenta(Cuenta c){ //Se agrega directamente al banco, el banco decide si hay espacio o no.
-       if(super.agregarCuenta(c)){         //Se cuenta las cuentas que son abiertas en dolares
-           if((this.getCantCuentas()<=100)&&(c.verificarSiLaCuentaEsEnDolar())) this.setCantCuentas(this.getCantCuentas()+1);
-           return true;
+   public boolean agregarCuenta(Cuenta c){ 
+       boolean agregado=false;
+       if((this.getCantCuentas()<=100){ 
+          if(c.verificarSiLaCuentaEsEnDolar()) this.setCantCuentas(this.getCantCuentas()+1);
+          agregado=super.agregarCuenta(c);
        }
-       else return false;
+       else if(!c.verificarSiLaCuentaEsEnDolar()) agregado=super.agregarCuenta(c);
+       return agregado;
    }
 }
 
