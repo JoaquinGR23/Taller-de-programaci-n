@@ -30,7 +30,7 @@ public class Tradicional extends Banco{
     @Override
    public boolean agregarCuenta(Cuenta c){ 
        boolean agregado=false;
-       if((this.getCantCuentas()<=100){ 
+       if((this.getCantCuentas()<=100)){ 
           if(c.verificarSiLaCuentaEsEnDolar()) this.setCantCuentas(this.getCantCuentas()+1);
           agregado=super.agregarCuenta(c);
        }
