@@ -1,0 +1,88 @@
+programa ParcialTBT12023 
+procesos
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+areas
+  a1:AreaP(6,1,6,1)
+  a2:AreaPC(1,2,60,50)
+  a3:AreaP(6,51,6,61)
+  a4:AreaP(100,100,100,100)
+robots
+  robot florero
+  variables
+    soyYo,ca,caConflicto,esqAntes,flores,avCruce,caCruce,cantPasos:numero
+  comenzar
+    RecibirMensaje(soyYo,f)
+    flores:=0
+    si(soyYo=1)
+      RecibirMensaje(caConflicto,F2)
+      esqAntes:= caConflicto-2
+      repetir esqAntes
+        juntarFlores(flores)
+        mover
+      avCruce:=PosAv
+      caCruce:=PosCa+1
+    sino 
+      derecha
+      RecibirMensaje(ca,f)
+      EnviarMensaje(ca,F1)
+      Pos(PosAv,ca)
+      repetir 4
+        juntarFlores(flores)
+        mover
+      avCruce:=PosAv+1
+      caCruce:=PosCa
+    BloquearEsquina(avCruce,caCruce)
+    Pos(avCruce,caCruce)
+    EnviarMensaje(soyYo,f)
+    juntarFlores(flores)
+    mover
+    LiberarEsquina(avCruce,caCruce)
+    juntarFlores(flores)
+    si(soyYo=1)
+      cantPasos:= 60-(esqAntes+2)
+      repetir cantPasos
+        mover
+        juntarFlores(flores)
+    sino
+      repetir 53
+        mover 
+        juntarFlores(flores)
+    EnviarMensaje(flores,f) 
+  fin
+  robot fiscalizador
+  variables
+    id,ca,flores:numero
+  comenzar
+    EnviarMensaje(1,F1)
+    EnviarMensaje(2,F2)
+    Random(ca,2,50)
+    EnviarMensaje(ca,F2)
+    repetir 2 
+      RecibirMensaje(id,*)
+    si(id=1)
+      RecibirMensaje(flores,F2)
+      Informar('llego primero el', 2)
+      Informar('flores juntadas es', flores)
+    sino
+      RecibirMensaje(flores,F1) 
+      Informar('llego primero el', 1)
+      Informar('flores juntadas es', flores)
+  fin
+variables
+  F1,F2:florero
+  f:fiscalizador
+comenzar
+  AsignarArea(F1,a1)
+  AsignarArea(F1,a2)
+  AsignarArea(F2,a2)
+  AsignarArea(F1,a3)
+  AsignarArea(f,a4)
+  Iniciar(F1,6,1)
+  Iniciar(F2,1,2)
+  Iniciar(f,100,100)
+fin

@@ -1,0 +1,101 @@
+programa parcialTHT22023 
+procesos
+  proceso sincronizacionFinal(E soyYo:numero)
+  variables 
+    sigue:boolean
+  comenzar
+    EnviarMensaje(0,f)
+    si(soyYo=1)
+      EnviarMensaje(V,r2)
+      EnviarMensaje(V,r3)
+    sino 
+      si(soyYo=2)
+        EnviarMensaje(V,r1)
+        EnviarMensaje(V,r3)
+      sino 
+        EnviarMensaje(V,r1)
+        EnviarMensaje(V,r2)
+    repetir 2
+      RecibirMensaje(sigue,*)
+  fin
+areas
+  a1:AreaP(1,1,1,1)
+  a2:AreaP(2,1,2,1)
+  a3:AreaP(3,1,3,1)
+  a4:AreaPC(10,10,30,30)
+  a5:AreaP(9,9,9,9)
+robots
+  robot florero
+  variables
+    soyYo,N,av,ca,avOrig,caOrig:numero
+    sigue:boolean
+  comenzar
+    RecibirMensaje(soyYo,f)
+    Random(N,2,5)
+    avOrig:=PosAv
+    caOrig:=PosCa
+    repetir N
+      EnviarMensaje(soyYo,f)
+      RecibirMensaje(av,f)
+      RecibirMensaje(ca,f)
+      sigue:=V
+      mientras(sigue)
+        BloquearEsquina(av,ca)
+        Pos(av,ca)
+        si(HayFlorEnLaEsquina)
+          tomarFlor
+        sino 
+          sigue:=F
+        Pos(avOrig,caOrig)
+        LiberarEsquina(av,ca)
+    sincronizacionFinal(soyYo)
+    EnviarMensaje(N,f)
+  fin
+  robot fiscalizador
+  variables
+    id,terminar,esq,intentos,total:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    terminar:=0
+    mientras(terminar<3)
+      RecibirMensaje(id,*)
+      si(id=1)
+        repetir 2
+          Random(esq,10,30)
+          EnviarMensaje(esq,r1)
+      sino 
+        si(id=2)
+          repetir 2
+            Random(esq,10,30)
+            EnviarMensaje(esq,r2)
+        sino 
+          si(id=3)
+            repetir 2
+              Random(esq,10,30)
+              EnviarMensaje(esq,r3)
+          sino 
+            terminar:=terminar+1
+    total:=0
+    repetir 3
+      RecibirMensaje(intentos,*)
+      total:=total+intentos
+    Informar('cantidad total de intentos ',total)
+  fin
+variables
+  r1,r2,r3:florero
+  f:fiscalizador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r1,a4)
+  AsignarArea(r2,a4)
+  AsignarArea(r3,a4)
+  AsignarArea(f,a5)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+  Iniciar(f,9,9)
+fin

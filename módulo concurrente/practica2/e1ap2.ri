@@ -1,0 +1,50 @@
+programa e1p2
+procesos
+  proceso recolectarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrerAv(E av:numero;E ca:numero;ES flores:numero)
+  comenzar
+    flores:=0
+    repetir 9
+      recolectarFlores(flores)
+      mover
+    recolectarFlores(flores)
+  fin
+areas
+  a1 : AreaP(1,1,1,10)
+  a2 : AreaP(2,11,2,20)
+robots
+  robot tipo1
+  variables
+    flores, flores2:numero
+    sigue:boolean
+  comenzar
+    si(PosAv = 1)
+      recorrerAv(PosAv,PosCa,flores)
+      EnviarMensaje(flores,r2)
+      RecibirMensaje(sigue,r2)
+      si(sigue)
+        RecibirMensaje(flores2,r2)
+        Informar('robot1 ganador y la diferencia es ',flores-flores2)
+    sino 
+      recorrerAv(PosAv,PosCa,flores)
+      RecibirMensaje(flores2,r1)
+      si(flores2>flores) 
+        EnviarMensaje(V,r1)
+        EnviarMensaje(flores,r1)
+      sino 
+        EnviarMensaje(F,r1)
+        Informar('robot2 ganador y la diferencia es ',flores-flores2)
+  fin
+variables
+  r1,r2 :tipo1
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,11)
+fin

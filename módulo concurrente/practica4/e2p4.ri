@@ -1,0 +1,101 @@
+programa e2p4
+procesos
+  proceso depositarP(E cant:numero)
+  comenzar
+    repetir cant
+      depositarPapel
+  fin
+  proceso recorrerAv
+  variables
+    cant,av,ca:numero
+  comenzar
+    cant:=0
+    repetir 99
+      av:=PosAv
+      ca:=PosCa
+      mientras(HayPapelEnLaEsquina) {control papel esquina}
+        mientras((HayPapelEnLaEsquina)&(cant<5)){control cant=5}
+          tomarPapel
+          cant:=cant+1
+        si(cant=5)
+          BloquearEsquina(50,50)
+          Pos(50,50)
+          depositarP(cant)
+          Pos(av,ca)
+          LiberarEsquina(50,50)
+          cant:=0
+      mover
+    av:=PosAv
+    ca:=PosCa
+    mientras(HayPapelEnLaEsquina)
+      mientras((HayPapelEnLaEsquina)&(cant<5))
+        tomarPapel
+        cant:=cant+1
+      si(cant=5)
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        depositarP(cant)
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+        cant:=0
+    BloquearEsquina(50,50) {para depositar los ultimos papeles}
+    Pos(50,50)
+    depositarP(cant)
+    Pos(av,ca)
+    LiberarEsquina(50,50)
+  fin
+areas
+  a1:AreaP(5,1,5,100)
+  a2:AreaP(10,1,10,100)
+  a3:AreaP(11,1,11,1)
+  a4:AreaP(12,1,12,1)
+  a5:AreaPC(50,50,50,50)
+robots
+  robot productor
+  comenzar
+    recorrerAv
+  fin
+  robot consumidor
+  variables
+    papeles,av,ca,cant,intentos:numero
+  comenzar
+    intentos:=0
+    av:=PosAv
+    ca:=PosCa
+    mientras(intentos<8)
+      cant:=0
+      Random(papeles,2,5)
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      mientras((HayPapelEnLaEsquina)&(papeles>cant))
+        tomarPapel
+        cant:=cant+1 {cantidad de papeles tomados}
+      si(papeles>cant) {en caso de no encontrar cant Req }
+        repetir cant
+          depositarPapel
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+      si(papeles>cant)
+        intentos:=intentos+1
+      sino
+        depositarP(papeles)
+        intentos:=0
+  fin
+variables
+  r1,r2:productor
+  r3,r4:consumidor
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  AsignarArea(r1,a5)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a5)
+  AsignarArea(r4,a5)
+  Iniciar(r1,5,1)
+  Iniciar(r2,10,1)
+  Iniciar(r3,11,1)
+  Iniciar(r4,12,1)
+fin
+{El enunciado dice que solo los consumidores ASUMEN que los productores dejaron de producir luego de 8 intentos, entonces por eso terminan su ejecucion pero los productores terminan cuando completan las avenidas}

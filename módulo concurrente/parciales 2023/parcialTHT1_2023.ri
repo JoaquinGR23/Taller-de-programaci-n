@@ -1,0 +1,130 @@
+programa parcialTHT12023 
+procesos
+  proceso juntarF(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso calcularMax(E id:numero;E flores:numero;ES max:numero;ES idMax:numero)
+  comenzar
+    si(flores>max)
+      max:=flores
+      idMax:=id
+  fin
+  proceso girar(E veces:numero)
+  comenzar
+    repetir veces
+      derecha
+  fin
+  proceso crearCuadrado(E lado:numero;ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado 
+        juntarF(flores)
+        mover
+      girar(1)        
+  fin
+areas
+  a1:AreaP(1,1,7,21)
+  a2:AreaP(10,1,16,21)
+  a3:AreaP(20,1,26,21)
+  a4:AreaP(100,100,100,100)
+  a5:AreaC(50,50,50,50)
+  a6:AreaP(1,22,1,22)
+  a7:AreaP(10,22,10,22)
+  a8:AreaP(20,22,20,22)
+robots
+  robot recolector
+  variables
+    soyYo,av,ca,lado,flores,total:numero
+    terminar:boolean
+  comenzar
+    RecibirMensaje(soyYo,c)
+    RecibirMensaje(lado,c)
+    total:=0
+    av:=PosAv
+    repetir 3
+      ca:=PosCa 
+      flores:=0
+      crearCuadrado(lado,flores)
+      repetir flores
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+      Pos(av,lado+ca+1)
+      EnviarMensaje(flores,c)
+      total:=total+flores
+    si(soyYo=1)
+      EnviarMensaje(V,r2)
+      EnviarMensaje(V,r3)
+    sino
+      si(soyYo=2)
+        EnviarMensaje(V,r1)
+        EnviarMensaje(V,r3)
+      sino 
+        EnviarMensaje(V,r2)
+        EnviarMensaje(V,r1)
+    repetir 2
+      RecibirMensaje(terminar,*)
+    EnviarMensaje(soyYo,c)
+    EnviarMensaje(total,c)
+  fin
+  robot coordinador
+  variables
+    lado,id,flores,max,idMax,av,ca:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    Random(lado,1,6)
+    EnviarMensaje(lado,r1)
+    Random(lado,1,6)
+    EnviarMensaje(lado,r2)
+    Random(lado,1,6)
+    EnviarMensaje(lado,r3)
+    av:=PosAv
+    ca:=PosCa
+    repetir 9
+      RecibirMensaje(flores,*)
+      repetir flores
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        tomarFlor
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+    max:=-1
+    repetir 3
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(flores,r1)
+      sino 
+        si(id=2)
+          RecibirMensaje(flores,r2)
+        sino 
+          RecibirMensaje(flores,r3)
+      calcularMax(id,flores,max,idMax)
+    Informar('El que recolecto mas flores es ',idMax)
+  fin
+variables
+  r1,r2,r3:recolector
+  c:coordinador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(c,a4)
+  AsignarArea(r1,a5)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a5)
+  AsignarArea(c,a5)
+  AsignarArea(r1,a6)
+  AsignarArea(r2,a7)
+  AsignarArea(r3,a8)
+  Iniciar(r1,1,1)
+  Iniciar(r2,10,1)
+  Iniciar(r3,20,1)
+  Iniciar(c,100,100)
+fin

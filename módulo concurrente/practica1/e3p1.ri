@@ -1,0 +1,92 @@
+programa e3p1
+procesos
+  proceso dejarFlores(E cont:numero)
+  comenzar
+    repetir cont
+      depositarFlor
+  fin
+  proceso recolectarFloresEnLaEsquinaSinModificar(ES flores:numero)
+  variables
+    cont: numero 
+  comenzar
+    cont:=0
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores+1
+      cont:=cont+1
+    dejarFlores(cont)
+  fin
+  proceso dejarPapeles(E cont:numero)
+  comenzar
+    repetir cont
+      depositarPapel
+  fin
+  proceso recolectarPapelesEnLaEsquinaSinModificar(ES papeles:numero)
+  variables
+    cont:numero
+  comenzar
+    cont:=0
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:= papeles+1
+      cont:=cont+1
+    dejarPapeles(cont)
+  fin
+  proceso orientarRobot(E veces:numero)
+  comenzar
+    repetir veces
+      derecha
+  fin
+  proceso papelesSuperanAFloresEnUno(E flores:numero;E papeles:numero;ES cant:numero)
+  comenzar
+    si(papeles = (flores+1)) 
+      cant:= cant+1
+  fin
+  proceso crearEscalon(ES tamanio:numero;ES cant:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0 
+    repetir 2
+      repetir tamanio 
+        recolectarFloresEnLaEsquinaSinModificar(flores)
+        recolectarPapelesEnLaEsquinaSinModificar(papeles)
+        mover
+      orientarRobot(1)
+    orientarRobot(2)
+    papelesSuperanAFloresEnUno(flores,papeles,cant)
+  fin
+  proceso crearEscalera(ES cant:numero)
+  variables
+    tamanio:numero
+  comenzar
+    tamanio:=1
+    cant:=0
+    repetir 4
+      crearEscalon(tamanio,cant)
+      tamanio:= tamanio+1
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot tipo1
+  variables
+    cant:numero
+  comenzar
+    crearEscalera(cant)
+    Informar(cant)
+  fin
+variables
+  r1: tipo1 
+  r2: tipo1 
+  r3: tipo1 
+comenzar
+  AsignarArea(r1,ciudad)
+  AsignarArea(r2,ciudad)
+  AsignarArea(r3,ciudad)
+  Iniciar(r1,12,14)
+  Iniciar(r2,17,10)
+  Iniciar(r3,22,6)
+fin

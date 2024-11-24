@@ -1,0 +1,88 @@
+programa e1p2
+procesos
+  proceso recolectarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrerAv(E av:numero;E ca:numero;ES flores:numero)
+  comenzar
+    flores:=0
+    repetir 9
+      recolectarFlores(flores)
+      mover
+    recolectarFlores(flores)
+  fin
+areas
+  a1 : AreaP(1,1,1,10)
+  a2 : AreaP(2,11,2,20)
+  a3 : AreaP(3,21,3,30)
+  a4 : AreaP(4,31,4,40)
+  a5 : AreaP(5,41,5,50)
+  a6 : AreaP(6,51,6,60)
+  a7 : AreaP(2,1,2,1)
+robots
+  robot juntador
+  variables
+    flores,quien:numero
+  comenzar
+    RecibirMensaje(quien,fiscal)
+    recorrerAv(PosAv,PosCa,flores)
+    EnviarMensaje(quien,fiscal)
+    EnviarMensaje(flores,fiscal)
+  fin
+  robot fiscalizador
+  variables
+    idMax,quien,floresMax,flores: numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    EnviarMensaje(5,r5)
+    EnviarMensaje(6,r6)
+    floresMax:=0
+    repetir 6
+      RecibirMensaje(quien,*)
+      si(quien=1)
+        RecibirMensaje(flores,r1)   
+      sino 
+        si(quien=2)
+          RecibirMensaje(flores,r2)
+        sino 
+          si(quien=3)
+            RecibirMensaje(flores,r3)
+          sino 
+            si(quien=4)
+              RecibirMensaje(flores,r4)
+            sino 
+              si(quien=5)
+                RecibirMensaje(flores,r5)
+              sino
+                RecibirMensaje(flores,r6)
+      si(floresMax<flores)
+        floresMax:=flores
+        idMax:=quien
+    Informar('El Robot ganador es ',idMax)
+    Informar('Junto una cantidad de flores igual a ',floresMax)
+  fin
+variables
+  r1,r2,r3,r4,r5,r6 :juntador
+  fiscal : fiscalizador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  AsignarArea(r5,a5)
+  AsignarArea(r6,a6)
+  AsignarArea(fiscal,a7)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,11)
+  Iniciar(r3,3,21)
+  Iniciar(r4,4,31)
+  Iniciar(r5,5,41)
+  Iniciar(r6,6,51)
+  Iniciar(fiscal,2,1)
+fin

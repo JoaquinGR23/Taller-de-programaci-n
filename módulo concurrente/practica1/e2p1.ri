@@ -1,0 +1,81 @@
+programa e2p1
+procesos
+  proceso recolectarPapeles(ES papeles: numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:= papeles+1
+  fin 
+  proceso recorrerAv(E av:numero;E ca:numero;ES papeles: numero)
+  comenzar
+    papeles :=0
+    repetir 18
+      recolectarPapeles(papeles)
+      mover
+    recolectarPapeles(papeles)   
+  fin
+  proceso recorrerCa(E av:numero; E ca: numero; ES papeles:numero)
+  comenzar
+    papeles:=0
+    repetir 18
+      recolectarPapeles(papeles)
+      mover
+    recolectarPapeles(papeles)
+  fin
+areas
+  a1:AreaP(10,10,10,28)
+  a2:AreaP(10,29,28,29)
+  a3:AreaP(29,11,29,29)
+  a4:AreaP(11,10,29,10)
+robots
+  robot robot1
+  variables
+    papelesJuntados: numero
+  comenzar
+    recorrerAv(PosAv,PosCa, papelesJuntados)
+    Informar(papelesJuntados)
+  fin
+  robot robot2
+  variables
+    papelesJuntados:numero
+  comenzar
+    derecha
+    recorrerCa(PosAv,PosCa,papelesJuntados)
+    Informar(papelesJuntados)
+  fin 
+  robot robot3
+  variables
+    papelesJuntados:numero
+  comenzar
+    derecha
+    derecha
+    recorrerAv(PosAv, PosCa, papelesJuntados)
+    Informar(papelesJuntados)
+  fin
+  robot robot4
+  variables
+    papelesJuntados:numero
+  comenzar
+    derecha 
+    derecha
+    derecha
+    recorrerCa(PosAv,PosCa,papelesJuntados)
+    Informar(papelesJuntados)
+  fin
+variables
+  r1 : robot1
+  r2 : robot2
+  r3 : robot3
+  r4 : robot4
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  Iniciar(r1,10,10)
+  Iniciar(r2,10,29)
+  Iniciar(r3,29,29)
+  Iniciar(r4,29,10)
+fin
+{PREGUNTAR: si dice lado 20, deberia ser 20 esquinas?
+debo informar dentro del del recorrerCa y recorrerAv? }

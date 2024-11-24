@@ -1,0 +1,136 @@
+programa e4p2
+procesos
+  proceso calcularMax(E cant:numero;ES max:numero;ES idMax:numero; E ID:numero)
+  comenzar
+    si(cant>max)
+      max:=cant
+      idMax:=ID
+  fin
+  proceso limpiarEsquina(ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cant:=cant+1
+  fin
+areas
+  a1: AreaP(25,1,25,1)
+  a2: AreaP(30,1,30,1)
+  a3: AreaP(35,1,35,1)
+  a4: AreaP(40,1,40,1)
+  a5: AreaPC(25,25,75,75)
+  a6: AreaP(1,1,1,1)
+robots
+  robot recolector
+  variables
+    soyYo,avAleatoria,caAleatoria,cant,avAnt,caAnt:numero
+    puedo, posicionarse:boolean
+  comenzar
+    RecibirMensaje(soyYo,f)
+    avAnt:=PosAv
+    caAnt:=PosCa
+    puedo:= V
+    cant:=0
+    mientras(puedo)
+      RecibirMensaje(puedo,f)
+      si(puedo)
+        Random(avAleatoria,25,75)
+        Random(caAleatoria,25,75)
+        Pos(avAleatoria,caAleatoria)
+        limpiarEsquina(cant)
+        Pos(avAnt,caAnt)
+        EnviarMensaje(V,f)
+    EnviarMensaje(soyYo,f)
+    EnviarMensaje(cant,f)
+    RecibirMensaje(posicionarse,f)
+    si(posicionarse)
+      Pos(50,50)
+  fin
+  robot fiscalizador
+  variables
+    ID,cant,robotAleatorio,idMax,max:numero
+    termino:boolean
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    repetir 10
+      Random(robotAleatorio,1,4)
+      si(robotAleatorio=1)
+        EnviarMensaje(V,r1)
+        RecibirMensaje(termino,r1)
+      sino
+        si(robotAleatorio=2)
+          EnviarMensaje(V,r2)
+          RecibirMensaje(termino,r2)
+        sino
+          si(robotAleatorio=3)
+            EnviarMensaje(V,r3)
+            RecibirMensaje(termino,r3)
+          sino
+            EnviarMensaje(V,r4)
+            RecibirMensaje(termino,r4)
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+    max:=-1
+    repetir 4
+      RecibirMensaje(ID,*)
+      si(ID=1)
+        RecibirMensaje(cant,r1)
+      sino
+        si(ID=2)
+          RecibirMensaje(cant,r2)
+        sino
+          si(ID=3)
+            RecibirMensaje(cant,r3)
+          sino
+            RecibirMensaje(cant,r4)
+      calcularMax(cant,max,idMax, ID)
+    si(idMax=1)
+      EnviarMensaje(V,r1)
+      EnviarMensaje(F,r2)
+      EnviarMensaje(F,r3)
+      EnviarMensaje(F,r4)
+    sino
+      si(idMax=2)
+        EnviarMensaje(V,r2)
+        EnviarMensaje(F,r1)
+        EnviarMensaje(F,r3)
+        EnviarMensaje(F,r4)
+      sino
+        si(idMax=3)
+          EnviarMensaje(V,r3)
+          EnviarMensaje(F,r1)
+          EnviarMensaje(F,r2)
+          EnviarMensaje(F,r4)
+        sino
+          EnviarMensaje(V,r4)
+          EnviarMensaje(F,r1)
+          EnviarMensaje(F,r2)
+          EnviarMensaje(F,r3)
+  fin
+variables
+  r1,r2,r3,r4:recolector
+  f:fiscalizador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  AsignarArea(r1,a5)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a5)
+  AsignarArea(r4,a5)
+  AsignarArea(f,a6)
+  Iniciar(r1,25,1)
+  Iniciar(r2,30,1)
+  Iniciar(r3,35,1)
+  Iniciar(r4,40,1)
+  Iniciar(f,1,1)
+fin
+{El programa es correcto}

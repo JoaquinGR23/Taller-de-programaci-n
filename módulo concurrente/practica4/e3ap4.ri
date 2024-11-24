@@ -1,0 +1,60 @@
+programa e3p4 {etapa homogenea}
+procesos
+  proceso recolectarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+areas
+  a1:AreaP(1,1,1,100)
+  a2:AreaP(2,1,2,100)
+  a3:AreaP(3,1,3,100)
+  a4:AreaP(4,1,4,1)
+robots
+  robot papelero
+  variables
+    soyYo,ca:numero
+    finEtapa:boolean
+  comenzar
+    RecibirMensaje(soyYo,c)
+    mientras(PosCa<100)
+      repetir 5 {pasos que debe hacer}
+        si(PosCa<100) {hasta que llegue a la ca 100}
+          recolectarP
+          mover
+      si(PosCa=100)
+        recolectarP
+      si(soyYo=1) 
+        EnviarMensaje(V,r2)
+        EnviarMensaje(V,r3)
+      sino 
+        si(soyYo=2)
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r3)
+        sino
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r2)
+      repetir 2
+        RecibirMensaje(finEtapa,*)
+  fin
+  robot coordinador
+  variables
+    id:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+  fin
+variables
+  r1,r2,r3:papelero
+  c:coordinador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(c,a4)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+  Iniciar(c,4,1)
+fin

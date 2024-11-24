@@ -1,0 +1,111 @@
+programa e5p3
+procesos
+  proceso recorrerAv(ES pasos:numero)
+  variables
+    pasos,avActual,caActual:numero
+    sigue:boolean
+  comenzar
+    sigue:=V
+    mientras((pasos<99)&(sigue))
+      avActual:=PosAv
+      caActual:=PosCa
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      si(HayPapelEnLaEsquina)
+        tomarPapel
+      sino
+        sigue:=F
+      {sacar sino y mientras(HayFlorEnLaBolsa) depositarFlor}
+      Pos(avActual,caActual)
+      LiberarEsquina(11,11)
+      si(sigue)
+        depositarPapel
+        mover
+        pasos:=pasos+1
+    si(pasos=99)
+      avActual:=PosAv
+      caActual:=PosCa
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      si(HayPapelEnLaEsquina)
+        tomarPapel
+      sino
+        sigue:=F
+      Pos(avActual,caActual)
+      LiberarEsquina(11,11)
+      si(sigue)
+        depositarPapel
+  fin
+  proceso calcularMax(ES max:numero;ES idMax:numero;E pasos:numero;E ID:numero)
+  comenzar
+    si(pasos>max)
+      max:=pasos
+      idMax:=ID
+  fin
+  proceso identificarLosRobots
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+  fin
+  proceso robotConMasRecorrido
+  variables
+    ID,pasos,max,idMax:numero
+  comenzar
+    max:=-1
+    repetir 4
+      RecibirMensaje(ID,*)
+      si(ID=1)
+        RecibirMensaje(pasos,r1)
+      sino 
+        si(ID=2)
+          RecibirMensaje(pasos,r2)
+        sino 
+          si(ID=3)
+            RecibirMensaje(pasos,r3)
+          sino 
+            RecibirMensaje(pasos,r4)
+      calcularMax(max,idMax,pasos,ID)
+  fin
+areas
+  a1:AreaP(4,1,4,100)
+  a2:AreaP(6,1,6,100)
+  a3:AreaP(8,1,8,100)
+  a4:AreaP(10,1,10,100)
+  a5:AreaPC(11,11,11,11)
+  a6:AreaP(1,1,1,1)
+robots
+  robot corredor
+  variables
+    soyYo,pasos:numero
+  comenzar
+    RecibirMensaje(soyYo,c)
+    recorrerAv(pasos)
+    EnviarMensaje(soyYo,c)
+    EnviarMensaje(pasos,c)
+  fin
+  robot coordinador
+  comenzar
+    identificarLosRobots
+    robotConMasRecorrido {determinara es igual a informar?}
+  fin
+variables
+  r1,r2,r3,r4:corredor
+  c:coordinador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  AsignarArea(r1,a5)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a5)
+  AsignarArea(r4,a5)
+  AsignarArea(c,a6)
+  Iniciar(r1,4,1)
+  Iniciar(r2,6,1)
+  Iniciar(r3,8,1)
+  Iniciar(r4,10,1)
+  Iniciar(c,1,1)
+fin

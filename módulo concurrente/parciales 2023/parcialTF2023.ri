@@ -1,0 +1,104 @@
+programa parcialTFT12023
+procesos
+  proceso recolectarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso primerTramo(ES flores:numero)
+  comenzar
+    repetir 2
+      repetir 10
+        recolectarFlores(flores)
+        mover
+      derecha
+    recolectarFlores(flores) 
+  fin
+  proceso segundoTramo(ES flores:numero)
+  comenzar
+    derecha
+    derecha
+    repetir 2
+      repetir 9
+        recolectarFlores(flores)
+        mover
+      derecha
+    recolectarFlores(flores)
+  fin
+areas
+  a1:AreaPC(1,1,11,11)
+  a2:AreaPC(13,1,23,11)
+  a3:AreaPC(20,20,20,20)
+  a4:AreaP(30,1,30,1)
+robots
+  robot tipo1
+  variables
+    soyYo,flores,av,ca:numero
+  comenzar
+    RecibirMensaje(soyYo,f)
+    flores:=0
+    primerTramo(flores)
+    si(soyYo=1)
+      EnviarMensaje(flores,r2)
+    sino
+      EnviarMensaje(flores,r4)
+    av:=PosAv
+    ca:=PosCa
+    repetir flores
+      BloquearEsquina(20,20)
+      Pos(20,20)
+      depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(20,20)
+  fin
+  robot tipo2
+  variables
+    flores,av,ca,flores1:numero
+  comenzar
+    RecibirMensaje(flores1,*)
+    flores:=0
+    segundoTramo(flores)
+    av:=PosAv
+    ca:=PosCa
+    repetir flores
+      BloquearEsquina(20,20)
+      Pos(20,20)
+      depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(20,20)
+    EnviarMensaje(flores1+flores,f)
+  fin
+  robot fiscalizador
+  variables
+    id,max,flores:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(3,r3)
+    max:=-1
+    repetir 2
+      RecibirMensaje(flores,*)
+      si(flores>max)
+        max:=flores
+    Informar('flores del equipo ganador ',max)
+  fin
+variables
+  r1,r3:tipo1
+  r2,r4:tipo2
+  f:fiscalizador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a1)
+  AsignarArea(r3,a2)  
+  AsignarArea(r4,a2)
+  AsignarArea(r1,a3)
+  AsignarArea(r2,a3)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a3)
+  AsignarArea(f,a4)
+  Iniciar(r1,1,1)
+  Iniciar(r2,11,10)
+  Iniciar(r3,13,1)
+  Iniciar(r4,23,10)
+  Iniciar(f,30,1)
+fin

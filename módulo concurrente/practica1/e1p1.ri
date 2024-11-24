@@ -1,0 +1,48 @@
+programa e1p1
+procesos
+  proceso recolectarFlores(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+  proceso depositarFloresEnLaEsquina(E avActual:numero;E caActual:numero;E cantFlores:numero)
+  comenzar
+    Pos(avActual,caActual)
+    repetir cantFlores
+      depositarFlor
+  fin
+  proceso recorrerAv(ES esqVacias:numero;ES cantFlores:numero) 
+  comenzar
+    esqVacias:=0
+    cantFlores:=0
+    repetir 99 
+      si(HayFlorEnLaEsquina) 
+        recolectarFlores(cantFlores)
+      sino 
+        esqVacias:= esqVacias+1
+      mover
+    si(HayFlorEnLaEsquina) 
+      recolectarFlores(cantFlores)
+    sino 
+      esqVacias:= esqVacias+1
+    depositarFloresEnLaEsquina(PosAv, PosCa, cantFlores)
+  fin
+areas
+  ciudad : AreaC(1,1,100,100)
+robots
+  robot tipo1
+  variables
+    esqVacias:numero
+    cantFlores:numero
+  comenzar 
+    recorrerAv(esqVacias,cantFlores)
+    Informar(cantFlores)
+    Informar(esqVacias)
+  fin
+variables
+  r : tipo1
+comenzar
+  AsignarArea(r, ciudad)
+  Iniciar(r,1,1)
+fin

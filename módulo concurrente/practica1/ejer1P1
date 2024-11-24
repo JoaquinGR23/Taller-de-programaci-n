@@ -1,0 +1,45 @@
+programa ejer1 
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores +1
+  fin
+  proceso esqVacia(ES esquina:numero)
+  comenzar
+    si (~HayFlorEnLaEsquina)
+      esquina:= esquina+1
+  fin
+  proceso RecorrerAV(ES esq:numero; ES floresJuntadas:numero)
+  comenzar
+    esq:= 0
+    floresJuntadas:=0
+    mientras(PosCa < 100)     
+      juntarFlores(floresJuntadas)
+      esqVacia(esq)
+      mover
+    si (PosCa = 100)
+      juntarFlores(floresJuntadas)
+      esqVacia(esq)
+      repetir floresJuntadas
+        depositarFlor
+  fin     
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot tipo1
+  variables
+    esqVacias: numero
+    cantF: numero
+  comenzar
+    RecorrerAV(esqVacias, cantF)
+    Informar(esqVacias)
+    Informar(cantF) 
+  fin
+variables
+  robot1:tipo1
+comenzar
+  AsignarArea(robot1, ciudad)
+  Iniciar(robot1, 1,1)
+fin

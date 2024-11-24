@@ -1,0 +1,87 @@
+programa e4p4
+procesos
+  proceso juntarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso vaciarBolsa
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+areas
+  a1:AreaP(2,1,2,1)
+  a2:AreaP(3,1,3,1)
+  a3:AreaPC(2,2,100,100)
+  a4:AreaP(1,1,1,1)
+robots
+  robot trabajador
+  variables
+    tarea,avOrig,caOrig,av,ca:numero
+  comenzar
+    RecibirMensaje(tarea,j)
+    avOrig:=PosAv
+    caOrig:=PosCa
+    mientras(tarea<>4)
+      RecibirMensaje(av,j)
+      RecibirMensaje(ca,j)
+      BloquearEsquina(av,ca)
+      Pos(av,ca)
+      si(tarea=1)
+        juntarF
+      sino 
+        si(tarea=2)
+          juntarP
+        sino 
+          vaciarBolsa
+      Pos(avOrig,caOrig)
+      LiberarEsquina(av,ca)
+      EnviarMensaje(V,j)
+      RecibirMensaje(tarea,j)
+  fin
+  robot jefe
+  variables
+    av,ca,tarea,num:numero
+    termino:boolean
+  comenzar
+    repetir 10 
+      Random(av,2,100)
+      Random(ca,2,100)
+      Random(tarea,1,3)
+      Random(num,1,2)
+      si(num=1) 
+        EnviarMensaje(tarea,r1)
+        EnviarMensaje(av,r1)
+        EnviarMensaje(ca,r1)
+        RecibirMensaje(termino,r1)
+      sino
+        EnviarMensaje(tarea,r2)
+        EnviarMensaje(av,r2)
+        EnviarMensaje(ca,r2)
+        RecibirMensaje(termino,r2)
+    EnviarMensaje(4,r1)
+    EnviarMensaje(4,r2)
+    
+  fin
+variables
+  r1,r2:trabajador
+  j:jefe
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r1,a3)
+  AsignarArea(r2,a3)
+  AsignarArea(j,a4)
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(j,1,1)
+fin
+{como no dice que regresa a su esquina orig, debo regresar igual?}

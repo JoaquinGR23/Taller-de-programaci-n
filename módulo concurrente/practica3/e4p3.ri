@@ -1,0 +1,84 @@
+programa e4p3 
+procesos
+  proceso obtenerElUltimoEnLlegar(ES ultimo:numero)
+  comenzar
+    repetir 4
+      RecibirMensaje(ultimo,*)
+  fin
+  proceso recolectarFloresEnLaEsquina(E av:numero; E ca:numero)
+  comenzar
+    Pos(av,ca)
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+areas
+  a1:AreaP(9,9,9,9)
+  a2:AreaP(9,10,9,10)
+  a3:AreaP(9,11,9,11)
+  a4:AreaP(9,12,9,12)
+  a5:AreaC(11,11,11,11) 
+  a6:AreaPC(10,10,10,10)
+  a7:AreaP(1,1,1,1)
+robots
+  robot tipo1
+  variables
+    soyYo,avOriginal,caOriginal:numero
+    sigue:boolean
+  comenzar
+    RecibirMensaje(soyYo,c)
+    sigue:=V
+    avOriginal:=PosAv
+    caOriginal:=PosCa
+    mientras(sigue) 
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+        BloquearEsquina(11,11)
+        Pos(11,11)
+        LiberarEsquina(10,10)
+        depositarFlor
+        Pos(avOriginal,caOriginal)
+        LiberarEsquina(11,11)
+      sino
+        Pos(avOriginal,caOriginal)
+        LiberarEsquina(10,10)
+        sigue:=F
+        EnviarMensaje(soyYo,c) {Mensaje de finalizacion}
+  fin
+  robot coordinador
+  variables
+    ultimo:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    obtenerElUltimoEnLlegar(ultimo)
+    Informar('ultimo en llegar es ',ultimo)
+    recolectarFloresEnLaEsquina(11,11) {No hace falta bloquear Esquina?}
+  fin
+variables
+  r1,r2,r3,r4:tipo1
+  c:coordinador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r4,a4)
+  AsignarArea(r1,a5)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a5)
+  AsignarArea(r4,a5)
+  AsignarArea(c,a5)
+  AsignarArea(r1,a6)
+  AsignarArea(r2,a6)
+  AsignarArea(r3,a6)
+  AsignarArea(r4,a6)
+  AsignarArea(c,a7)
+  Iniciar(r1,9,9)
+  Iniciar(r2,9,10)
+  Iniciar(r3,9,11)
+  Iniciar(r4,9,12)
+  Iniciar(c,1,1)
+fin

@@ -1,0 +1,65 @@
+programa ej6
+areas
+  ciudad1: AreaC(1,1,100,100)
+robots 
+  robot t1
+  variables
+    id,cant,ca,av:numero
+    ok:boolean
+  comenzar
+    mientras(PosCa<100)
+      cant:=0
+      mientras(cant<5)&(PosCa<100)
+        mientras(HayPapelEnLaEsquina)&(cant<5)
+          tomarPapel
+          cant:=cant+1
+        mover    
+      av:=PosAv
+      ca:=PosCa
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      repetir cant
+        depositarPapel
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+  fin
+  robot t2
+  variables
+    cant,av,ca,intentos:numero
+    ok:boolean
+  comenzar
+    intentos:=0
+    av:=PosAv
+    ca:=PosCa
+    mientras(intentos<8)  
+      Random(cant,2,5)
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      repetir cant
+        si(HayPapelEnLaEsquina)
+          tomarPapel
+          ok:=V
+        sino
+          ok:=F
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+      si (ok)
+        repetir cant
+          depositarPapel
+      si~(ok)
+        intentos:=intentos+1
+    Informar(intentos)    
+  fin
+variables
+  r1,r2:t1
+  r3,r4:t2
+comenzar
+  AsignarArea(r1,ciudad1)
+  AsignarArea(r2,ciudad1)
+  AsignarArea(r3,ciudad1)
+  AsignarArea(r4,ciudad1)
+  Iniciar(r1,10,1)
+  Iniciar(r2,5,1)
+  Iniciar(r3,11,1)
+  Iniciar(r4,12,1)
+fin  

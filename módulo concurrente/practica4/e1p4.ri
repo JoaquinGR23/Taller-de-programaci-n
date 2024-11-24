@@ -1,0 +1,104 @@
+programa ejer1P4
+procesos
+  proceso juntarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso depositarAv (E flores: numero; ES sigue:boolean)
+  comenzar
+    mientras((flores>0)&(PosCa<100)){no puedo usar repetir ya que tengo que llevar el control de la calle}
+      mover
+      depositarFlor
+      flores:=flores-1
+    si(PosCa=100)
+      sigue:=F
+  fin
+  proceso dejar(E flores: numero)
+  comenzar
+    repetir flores
+      depositarFlor
+  fin
+areas
+  a1: AreaPC(1,1,1,100)
+  a2: AreaPC(2,1,2,100)
+  a3: AreaPC(3,1,3,100)
+  a4: AreaP(100,100,100,100)
+robots
+  robot cliente
+  variables
+    soyYo,ca, av,flores: numero
+    sigue,ACK:boolean
+  comenzar
+    RecibirMensaje(soyYo, s)
+    sigue:=V
+    mientras(sigue)
+      Random(flores,1,4)
+      EnviarMensaje(soyYo, s)
+      EnviarMensaje(flores, s)
+      av:=PosAv
+      ca:=PosCa+1
+      EnviarMensaje(av, s)
+      EnviarMensaje(ca, s)
+      RecibirMensaje(ACK,s)
+      mover
+      juntarF
+      Pos(av,ca-1)
+      depositarAv(flores,sigue)  
+    EnviarMensaje(0, s)
+  fin
+  robot servidor
+  variables
+    id,flores,av,caSig,terminar: numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    terminar:=0
+    mientras(terminar < 3)
+      RecibirMensaje(id,*) 
+      si(id=1)
+        RecibirMensaje(flores,r1)
+        RecibirMensaje(av,r1)
+        RecibirMensaje(caSig,r1)
+        Pos(av, caSig)
+        dejar(flores)
+        Pos(100,100)
+        EnviarMensaje(V,r1){senial de reconocimiento ACK}
+      sino 
+        si(id=2)
+          RecibirMensaje(flores,r2)
+          RecibirMensaje(av,r2)
+          RecibirMensaje(caSig,r2)
+          Pos(av, caSig)
+          dejar(flores)
+          Pos(100,100)
+          EnviarMensaje(V,r2){senial de reconocimiento ACK}
+        sino
+          si(id=3)
+            RecibirMensaje(flores,r3)
+            RecibirMensaje(av,r3)
+            RecibirMensaje(caSig,r3)
+            Pos(av, caSig)
+            dejar(flores)
+            Pos(100,100)
+            EnviarMensaje(V,r3){senial de reconocimiento ACK}
+          sino
+            terminar:= terminar+1 
+  fin
+variables
+  r1,r2,r3:cliente
+  s: servidor
+comenzar 
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(s,a1)
+  AsignarArea(s,a2)
+  AsignarArea(s,a3)
+  AsignarArea(s,a4)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+  Iniciar(s,100,100)
+fin

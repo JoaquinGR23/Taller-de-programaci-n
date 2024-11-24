@@ -1,0 +1,27 @@
+programa e1p2
+procesos
+  proceso 
+areas
+  a1 : AreaP(1,1,1,10)
+  a2 : AreaP(2,11,2,20)
+robots
+  robot tipo1
+  variables
+    flores:numero
+  comenzar
+    si(PosAv = 1)
+      recorrerAv(PosAv,PosCa,flores)
+      EnviarMensaje(flores,r2)
+    sino 
+      recorrerAv(PosAv,PosCa,flores)
+      RecibirMensaje(flores2,r1)
+      si()
+  fin
+variables
+  r1,r2 :tipo1
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,11)
+fin

@@ -1,0 +1,88 @@
+programa e3p2
+procesos
+  proceso recolectarPapelesEnLaEsquina(ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso recolectarFloresEnLaEsquina(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso tramoEquipoB(ES flores:numero)
+  comenzar
+    flores:=0
+    repetir 9
+      recolectarFloresEnLaEsquina(flores)
+      mover
+    recolectarFloresEnLaEsquina(flores)      
+  fin
+  proceso tramoEquipoA(ES papeles:numero)
+  comenzar
+    papeles:=0
+    repetir 9
+      recolectarPapelesEnLaEsquina(papeles)
+      mover
+    recolectarPapelesEnLaEsquina(papeles)      
+  fin
+areas
+  a1:AreaP(1,1,10,1)
+  a2:AreaP(11,1,20,1)
+  b1:AreaP(1,5,10,5)
+  b2:AreaP(11,5,20,5)
+robots
+  robot tipoA1
+  variables
+    papeles:numero
+  comenzar
+    derecha
+    tramoEquipoA(papeles)
+    EnviarMensaje(papeles,A2)
+  fin
+  robot tipoA2
+  variables
+    papeles,papelesA1,total:numero
+  comenzar
+    derecha
+    RecibirMensaje(papelesA1,A1)
+    tramoEquipoA(papeles)
+    total:= papelesA1+papeles
+    Informar('papeles recolectados igual a', total)
+  fin
+  {-----------------------------}
+  robot tipoB1
+  variables
+    flores:numero
+  comenzar
+    derecha
+    tramoEquipoB(flores)
+    EnviarMensaje(flores,B2)
+  fin
+  robot tipoB2
+  variables
+    flores,floresB1,total:numero
+  comenzar
+    derecha
+    RecibirMensaje(floresB1,B1)
+    tramoEquipoB(flores)
+    total:= floresB1+flores
+    Informar('flores recolectados igual a', total)
+  fin
+variables
+  A1: tipoA1
+  A2: tipoA2
+  B1: tipoB1
+  B2: tipoB2
+comenzar
+  AsignarArea(A1,a1)
+  AsignarArea(A2,a2)
+  AsignarArea(B1,b1)
+  AsignarArea(B2,b2)
+  Iniciar(A1,1,1)
+  Iniciar(A2,11,1)
+  Iniciar(B1,1,5)
+  Iniciar(B2,11,5)
+fin

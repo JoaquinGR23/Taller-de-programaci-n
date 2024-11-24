@@ -1,0 +1,89 @@
+programa parcialTCT22023 
+procesos
+  proceso juntarF(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso girar(E veces:numero)
+  comenzar
+    repetir veces
+      derecha
+  fin
+  proceso crearCuadrado(E lado:numero;ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        juntarF(flores)
+        mover
+      girar(1)
+  fin
+areas
+  a1:AreaP(1,1,6,30)
+  a2:AreaP(8,1,13,30)
+  a3:AreaP(15,1,20,30)
+  a4:AreaP(1,31,1,31)
+  a5:AreaP(8,31,8,31)
+  a6:AreaP(15,31,15,31)
+  a7:AreaPC(50,50,50,50)
+  a8:AreaP(51,1,51,1)
+robots
+  robot florero
+  variables
+    soyYo,flores,lado,av,ca:numero
+    llegue:boolean
+  comenzar
+    RecibirMensaje(soyYo,c)
+    flores:=0
+    repetir 5
+      Random(lado,1,5)
+      crearCuadrado(lado,flores)
+      si(soyYo=1)
+        EnviarMensaje(V,r2)
+        EnviarMensaje(V,r3)
+      sino 
+        si(soyYo=2)
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r3)
+        sino 
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r2)
+      repetir 2
+        RecibirMensaje(llegue,*)
+      Pos(PosAv,PosCa+lado+1)
+    av:=PosAv
+    ca:=PosCa
+    repetir flores
+      BloquearEsquina(50,50) 
+      Pos(50,50)
+      depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+  fin
+  robot coordinador
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+  fin
+variables
+  r1,r2,r3:florero
+  c:coordinador
+comenzar
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a3)
+  AsignarArea(r1,a4)
+  AsignarArea(r2,a5)
+  AsignarArea(r3,a6)
+  AsignarArea(r1,a7)
+  AsignarArea(r2,a7)
+  AsignarArea(r3,a7)
+  AsignarArea(c,a8)
+  Iniciar(r1,1,1)
+  Iniciar(r2,8,1)
+  Iniciar(r3,15,1)
+  Iniciar(c,51,1)
+fin
+{Parcial corregido}

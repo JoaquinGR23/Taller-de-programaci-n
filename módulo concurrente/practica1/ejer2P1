@@ -1,0 +1,66 @@
+programa ejer2
+procesos
+  proceso recogerP(ES papeles: numero)
+  comenzar
+    papeles:=0
+    repetir 19
+      si(HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:=papeles+1
+      mover
+  fin
+areas
+  area1: AreaP(10,10,10,29)
+  area2: AreaP(10,30,29,30)
+  area3: AreaP(30, 11, 30, 30)
+  area4: AreaP(11,10, 30, 10)
+robots
+  robot tipo1
+  variables
+    p1: numero
+  comenzar
+    recogerP(p1)
+    Informar(p1)
+  fin
+  robot tipo2
+  variables
+    p2:numero
+  comenzar
+    derecha
+    recogerP(p2)
+    Informar(p2)
+  fin
+  robot tipo3
+  variables
+    p3: numero
+  comenzar 
+    derecha
+    derecha
+    recogerP(p3)
+    Informar(p3)
+  fin
+  robot tipo4
+  variables
+    p4:numero
+  comenzar
+    derecha
+    derecha
+    derecha
+    recogerP(p4)
+    Informar(p4)
+  fin
+variables
+  robot1: tipo1
+  robot2: tipo2
+  robot3: tipo3
+  robot4: tipo4
+comenzar
+  AsignarArea(robot1,area1)
+  AsignarArea(robot2,area2)
+  AsignarArea(robot3, area3)
+  AsignarArea(robot4, area4)
+  Iniciar(robot1,10,10)
+  Iniciar(robot2, 10,30)
+  Iniciar(robot3,30,30)
+  Iniciar(robot4,30,10)
+fin 
