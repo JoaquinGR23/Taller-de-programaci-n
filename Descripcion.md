@@ -1,3 +1,15 @@
-Creado con el objetivo de aumentar el porcentaje de Aprobados en la materia.
 Aqui encontraran PARCIALES, EJERCICIOS PRACTICOS y comparto mis resoluciones. 
-Espero que A TODOS les sirva de guia y puedan mejorar aun mas los planteamientos.
+Espero les sirva de guia y puedan mejorar mas los planteamientos.
+
+
+
+
+
+
+
+
+
+
+
+Si te sirvio podes ayudarme con un Like :D
+Mi cbu:
